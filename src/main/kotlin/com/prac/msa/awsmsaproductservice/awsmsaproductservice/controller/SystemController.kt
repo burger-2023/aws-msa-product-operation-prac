@@ -4,6 +4,7 @@ import com.sun.management.OperatingSystemMXBean
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.lang.management.ManagementFactory
 import java.net.InetAddress
@@ -32,9 +33,11 @@ class SystemController {
     }
 
     @GetMapping("/cpu-load")
-    fun cpuLoadTest(): String {
+    fun cpuLoadTest(
+        @RequestParam repeatNum: Int?
+    ): String {
         val startTime = System.currentTimeMillis()
-        val primes = generatePrimes(50000) // 계산 집약적인 작업
+        val primes = generatePrimes(repeatNum ?: 50000) // 계산 집약적인 작업
         val endTime = System.currentTimeMillis()
 
         return "Found ${primes.size} primes in ${endTime - startTime} milliseconds"
